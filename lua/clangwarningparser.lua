@@ -425,6 +425,7 @@ LF.CopyKeymaps = function(optskms)
 end
 
 M.setup = function(opts)
+  opts = opts or {}
   for key, val in pairs(Config) do
     if type(val) == "table" then
       if not (key == "keymaps") then
@@ -444,7 +445,7 @@ M.setup = function(opts)
   else
     State.root = os.getenv(Config.root_env or "") or os.getenv("PWD")
   end
-  LF.CopyKeymaps(opts.keymaps)
+  LF.CopyKeymaps(opts.keymaps or {})
   LF.SetupHls()
   defcommand("CWParse", function(args) LF.Load(args) end, {
     force = true,
