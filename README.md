@@ -55,12 +55,12 @@ require('clangwarningparser').setup({
   normalize_path = true,
   keymaps = {
     preview = {'o', 'p'},
-    select_entry = {'<CR>'},
-    toggle_win = {'<leader>w'},
-    open_win = {'<leader>Wo'},
-    close_win = {'<leader>Wc'},
-    quit_preview = {'q'},
-    toggle_done = {'d'}
+    select_entry = '<CR>',
+    toggle_win = '<leader>w',
+    open_win = '<leader>Wo',
+    close_win = '<leader>Wc',
+    quit_preview = 'q',
+    toggle_done = 'd'
   },
   colors = {
     done = "#05a623",
