@@ -20,9 +20,11 @@ use {'strptrk/clangwarningparser.nvim'}
 
 You have to enable `termguicolors` to have proper coloring.
 
+Vim:
 ```vim
 set termguicolors
 ```
+Lua:
 ```lua
 vim.o.termguicolors = true
 ```
