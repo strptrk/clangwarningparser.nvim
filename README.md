@@ -101,4 +101,4 @@ Options:
 - `colors`: the colors used by the plugin
     - `done`: the foreground color used to mark entries done
     - `preview_filepath`: the path's color in the floating preview window
-    - `select_entry`: the foreground color of the currently hovered entry in the sidebar
+    - `select_entry`: the foreground color of the currently hovered entry in the sidebar (background is the `CursorLine` highlight)
