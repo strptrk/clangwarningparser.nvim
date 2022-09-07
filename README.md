@@ -134,5 +134,5 @@ require('clangwarningparser').setup({
     toggle_done = 'd'
   },
 })
-map('n', '<leader>w', '<cmd>CWParse buffers<cr>')
+vim.keymap.set('n', '<leader>w', '<cmd>CWParse buffers<cr>')
 ```
