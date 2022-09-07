@@ -78,3 +78,5 @@ Options:
     - `height_percentage`: height of the preview window relative to the editor size
     - `border`: border style of the preview window
         - possible values: 'none', 'single', 'double', 'rounded', 'solid', 'shadow'
+
+- `relative` and `width`: if `relative` is `true`, then the `width` value is a percentage, relative to the editor size, if `relative` is `false`, then `width` represents the number of columns.
