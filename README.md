@@ -77,4 +77,4 @@ Options:
     - `width_percentage`: width of the preview window relative to the editor size
     - `height_percentage`: height of the preview window relative to the editor size
     - `border`: border style of the preview window
-        possible values: 'none', 'single'
+        - possible values: 'none', 'single', 'double', 'rounded', 'solid', 'shadow'
