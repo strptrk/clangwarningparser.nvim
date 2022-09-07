@@ -109,7 +109,30 @@ Options:
 
 ## Usage
 
-Calling the `setup` function defines the command `CWParse`, calling it will map your configured keys
+Calling the `setup` function defines the command `CWParse`
 - `CWParse` to parse the current buffer as a clang-tidy output file
 - `CWParse file1 file2 ...` to parse the argument files as a clang-tidy output files
 - `CWParse buffers` to parse the currently opened buffers as clang-tidy output files
+
+Example:
+```lua
+require('clangwarningparser').setup({
+  float_opts = {
+    width_percentage = 90,
+    height_percentage = 75,
+    border = 'rounded'
+  },
+  open_on_load = true,
+  center_on_select = true,
+  root = '/home/user/my_project',
+  map_defaults = false,
+  keymaps = {
+    preview = 'o',
+    select_entry = '<CR>',
+    toggle_win = '<leader>w',
+    quit_preview = 'q',
+    toggle_done = 'd'
+  },
+})
+map('n', '<leader>w', '<cmd>CWParse buffers<cr>')
+```
