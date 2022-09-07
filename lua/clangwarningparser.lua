@@ -6,7 +6,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local ceil = math.ceil
 local defcommand = vim.api.nvim_create_user_command
 
-M = {}
+local M = {}
 local LF = {}
 
 local State = {
