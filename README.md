@@ -76,22 +76,22 @@ require('clangwarningparser').setup({
 Options:
 
 - `float_opts`: options to control appearance of the preview window
-    - `width_percentage`: width of the preview window relative to the editor size
-    - `height_percentage`: height of the preview window relative to the editor size
+    - `width_percentage`: width of the preview window relative to the editor size (1-100)
+    - `height_percentage`: height of the preview window relative to the editor size (1-100)
     - `border`: border style of the preview window
         - possible values: 'none', 'single', 'double', 'rounded', 'solid', 'shadow'
 
 - `relative` and `width`: if `relative` is `true`, then the `width` value is a percentage, relative to the editor size, if `relative` is `false`, then `width` represents the number of columns.
 
-- `open_on_load`: `true` to open the sidebar when calling `CWParse`, `false` otherwise
-- `center_on_select`: `true` to center the source code window when selecting the entry in the sidebar, `false` otherwise (executes `norm zz`)
-- `strict_bufname`: `true` to only parse files ending with `.log` when calling `CWParse buffers`, `false` otherwise
+- `open_on_load`: open the sidebar when calling `CWParse`, `true/false`
+- `center_on_select`: center the source code window when selecting the entry in the sidebar, `true/false`  (executes `norm zz`)
+- `strict_bufname`:  only parse files ending with `.log` when calling `CWParse buffers`, `true/false` 
 - `root`: the project root directory
 - `root_env`: the environmental variable which stores the project root directory
-- `root_cd`: `true` if you want to `:cd` into the `root` or `root_env` directory, `false` otherwise
+- `root_cd`: `:cd` into the `root` or `root_env` directory, `true/false` 
     - note: `root` takes precedence over `root_env`, if neither is given, the root will be set to $PWD
-- `map_defaults`: `true` to set default keymaps to functions you do not map, `false` otherwise
-- `normalize_path`: `true` to replace '../../' with 'root/' in file paths, `false` otherwise
+- `map_defaults`: set default keymaps to functions you do not map, `true/false` 
+- `normalize_path`: replace '../../' with 'root/' in file paths, `true/false` 
 - `keymaps`: each keymap is either a string or a table of strings
     - `preview`: opens the description of the error in a floating window
     - `select_entry`: jumpts to the location of the warning in your original window
