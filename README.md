@@ -22,7 +22,6 @@ You have to enable `termguicolors` to have proper coloring.
 ```vim
 set termguicolors
 ```
-
 ```lua
 vim.o.termguicolors = true
 ```
