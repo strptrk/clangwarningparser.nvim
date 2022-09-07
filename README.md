@@ -81,7 +81,9 @@ Options:
     - `border`: border style of the preview window
         - possible values: 'none', 'single', 'double', 'rounded', 'solid', 'shadow'
 
-- `relative` and `width`: if `relative` is `true`, then the `width` value is a percentage, relative to the editor size, if `relative` is `false`, then `width` represents the number of columns.
+- `relative` and `width`:
+    - if `relative` is `true`, then the `width` value is a percentage, relative to the editor size,
+    - if `relative` is `false`, then `width` represents the number of columns.
 
 - `open_on_load`: open the sidebar when calling `CWParse`, `true/false`
 - `center_on_select`: center the source code window when selecting the entry in the sidebar, `true/false`  (executes `norm zz`)
