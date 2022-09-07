@@ -8,7 +8,7 @@ The goal of clangwarningparser.nvim is to make it easier to handle clang-tidy ou
 
 ## Install
 
-Using packer:
+Using [packer](https://github.com/wbthomason/packer.nvim):
 ```lua
 use {'strptrk/clangwarningparser.nvim'}
 ```
