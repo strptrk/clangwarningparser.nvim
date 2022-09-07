@@ -109,7 +109,7 @@ Options:
 
 ## Usage
 
-Calling the `setup` function defines the command `CWParse`
+Calling the `setup` function defines the command `CWParse`, calling it will map your configured keys
 - `CWParse` to parse the current buffer as a clang-tidy output file
 - `CWParse file1 file2 ...` to parse the argument files as a clang-tidy output files
 - `CWParse buffers` to parse the currently opened buffers as clang-tidy output files
