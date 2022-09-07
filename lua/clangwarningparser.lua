@@ -34,6 +34,7 @@ local Config = {
   root_env = "",
   root_cd = false,
   map_defaults = true,
+  normalize_path = true,
   keymaps = {
     preview = {'o', 'p'},
     select_entry = {'<CR>'},
@@ -91,7 +92,7 @@ LF.ParseWarnings = function(str)
       local lin, col = line:match(':(%d+):(%d+):')
       local file = line:match('^(.*):%d+:%d+:')
       local shortfile
-      if file:match(".*%.%./%.%./") then -- mindegyik ../../up stb, nincs ../path
+      if Config.normalize_path and file:match(".*%.%./%.%./") then
         shortfile = file:match(".*%.%./%.%./(.*)")
         file = root .. '/' .. shortfile
       else
@@ -161,7 +162,6 @@ LF.PreviewWarn = function(warns, index, opts)
     style = 'minimal',
     border = opts.border or Config.float_opts.border
   })
-  -- for k, v in pairs(PreviewConfig) do api.nvim_win_set_var(tmp_win, k, v) end
   wo.scrolloff = 0
   wo.sidescrolloff = 0
   wo.wrap = true
