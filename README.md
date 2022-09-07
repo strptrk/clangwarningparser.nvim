@@ -75,7 +75,6 @@ require('clangwarningparser').setup({
 
 Options:
 
-
 - `float_opts`: options to control appearance of the preview window
     - `width_percentage`: width of the preview window relative to the editor size
     - `height_percentage`: height of the preview window relative to the editor size
@@ -85,7 +84,7 @@ Options:
 - `relative` and `width`: if `relative` is `true`, then the `width` value is a percentage, relative to the editor size, if `relative` is `false`, then `width` represents the number of columns.
 
 - `open_on_load`: `true` to open the sidebar when calling `CWParse`, `false` otherwise
-- `center_on_select`: `true` to center the source code window when selecting the entry in the sidebar, `false` otherwise (`zz`)
+- `center_on_select`: `true` to center the source code window when selecting the entry in the sidebar, `false` otherwise (executes` norm zz`)
 - `strict_bufname`: `true` to only parse files ending with `.log` when calling `CWParse buffers`, `false` otherwise
 - `root`: the project root directory
 - `root_env`: the environmental variable which stores the project root directory
