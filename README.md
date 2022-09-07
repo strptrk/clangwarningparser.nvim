@@ -1,0 +1,1 @@
+# clangwarningparser.nvim
