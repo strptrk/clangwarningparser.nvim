@@ -86,5 +86,19 @@ Options:
 - `strict_bufname`: `true` to only parse files ending with `.log` when calling `CWParse buffers`, `false` otherwise
 - `root`: the project root directory
 - `root_env`: the environmental variable which stores the project root directory
-- `root_cd`: `true` if you want to `:cd` into the `root` or `root_env` directory
+- `root_cd`: `true` if you want to `:cd` into the `root` or `root_env` directory, `false` otherwise
     - note: `root` takes precedence over `root_env`, if neither is given, the root will be set to $PWD
+- `map_defaults`: `true` to set default keymaps to functions you do not map, `false` otherwise
+- `normalize_path`: `true` replace '../../' with 'root/', `false` otherwise
+- `keymaps`: each keymap is either a string or a table of strings
+    - `preview`: opens the description of the error in a floating window
+    - `select_entry`: jumpts to the location of the warning in your original window
+    - `toggle_win`: toggles the sidebar
+    - `open_win`: opens the sidebar
+    - `close_win`: closes the sidebar
+    - `quit_preview`: quits the floating preview window
+    - `toggle_done`: marks currently selected entry as done or undone (by setting the foreground color)
+- `colors`: the colors used by the plugin
+    - `done`: the foreground color used to mark entries done
+    - `preview_filepath`: the path's color in the floating preview window
+    - `select_entry`: the foreground color of the currently hovered entry in the sidebar
