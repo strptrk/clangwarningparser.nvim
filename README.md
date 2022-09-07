@@ -7,6 +7,7 @@ The goal of clangwarningparser.nvim is to make it easier to handle clang-tidy ou
 1. [Install](#install)
 1. [Requirements](#requirements)
 1. [Configuration](#configuration)
+1. [Usage](#usage)
 
 ## Install
 
@@ -102,3 +103,10 @@ Options:
     - `done`: the foreground color used to mark entries done
     - `preview_filepath`: the path's color in the floating preview window
     - `select_entry`: the foreground color of the currently hovered entry in the sidebar (background is the `CursorLine` highlight)
+
+## Usage
+
+Calling the `setup` function defines the command `CWParse`
+- `CWParse` to parse the current buffer as a clang-tidy output file
+- `CWParse file1 file2 ...` to parse the argument files as a clang-tidy output files
+- `CWParse buffers` to parse the currently opened buffers as clang-tidy output files
