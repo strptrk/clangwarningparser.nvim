@@ -1,8 +1,14 @@
 # clangwarningparser.nvim
 
-The goal of clangwarningparser.nvim is to make it easier to handle clang-tidy output files by parsing each arguments' contents and putting it in a list, also providing previews and jump-to-location.
+The goal of clangwarningparser.nvim is to make it easier to handle clang-tidy output files by parsing each arguments' contents and putting them in a list, also providing previews and jump-to-location.
 
-Usage:
+## Table of contents
 
+1. [Install](#install)
 
-badonkadonk
+## Install
+
+Using packer:
+```lua
+use {'strptrk/clangwarningparser.nvim'}
+```
