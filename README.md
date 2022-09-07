@@ -74,6 +74,6 @@ Options:
 
 
 - `float_opts`: options to control appearance of the preview window
--- `width_percentage`: width of the preview window relative to the editor size
--- `height_percentage`: height of the preview window relative to the editor size
--- `border`: border style of the preview window
+    - `width_percentage`: width of the preview window relative to the editor size
+    - `height_percentage`: height of the preview window relative to the editor size
+    - `border`: border style of the preview window
