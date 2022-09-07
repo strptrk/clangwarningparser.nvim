@@ -85,15 +85,15 @@ Options:
     - if `relative` is `true`, then the `width` value is a percentage, relative to the editor size,
     - if `relative` is `false`, then `width` represents the number of columns.
 
-- `open_on_load`: open the sidebar when calling `CWParse`, `true/false`
-- `center_on_select`: center the source code window when selecting the entry in the sidebar, `true/false`  (executes `norm zz`)
-- `strict_bufname`:  only parse files ending with `.log` when calling `CWParse buffers`, `true/false` 
+- `open_on_load`: open the sidebar when calling `CWParse` (`true/false`)
+- `center_on_select`: center the source code window when selecting the entry in the sidebar (`true/false`)  (executes `norm zz`)
+- `strict_bufname`:  only parse files ending with `.log` when calling `CWParse buffers` (`true/false`) 
 - `root`: the project root directory
 - `root_env`: the environmental variable which stores the project root directory
-- `root_cd`: `:cd` into the `root` or `root_env` directory, `true/false` 
+- `root_cd`: `:cd` into the `root` or `root_env` directory (`true/false`) 
     - note: `root` takes precedence over `root_env`, if neither is given, the root will be set to $PWD
-- `map_defaults`: set default keymaps to functions you do not map, `true/false` 
-- `normalize_path`: replace '../../' with 'root/' in file paths, `true/false` 
+- `map_defaults`: set default keymaps to functions you do not map (`true/false`) 
+- `normalize_path`: replace '../../' with 'root/' in file paths (`true/false`) 
 - `keymaps`: each keymap is either a string or a table of strings
     - `preview`: opens the description of the error in a floating window
     - `select_entry`: jumpts to the location of the warning in your original window
