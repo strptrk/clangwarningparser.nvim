@@ -16,52 +16,52 @@ local State = {
   warns = {},
   hl_ns = -1,
   keys_mapped = false,
-  root = ""
+  root = '',
 }
 
 local Config = {
   float_opts = {
     width_percentage = 75,
     height_percentage = 75,
-    border = 'rounded'
+    border = 'rounded',
   },
   relative = true,
   width = 20,
   open_on_load = true,
   center_on_select = false,
   strict_bufname = true,
-  root = "",
-  root_env = "",
+  root = '',
+  root_env = '',
   root_cd = false,
   map_defaults = true,
   normalize_path = true,
   keymaps = {
-    preview = {'o', 'p'},
-    select_entry = {'<CR>'},
-    toggle_win = {'<leader>w'},
-    open_win = {'<leader>Wo'},
-    close_win = {'<leader>Wc'},
-    quit_preview = {'q'},
-    toggle_done = {'d'}
+    preview = { 'o', 'p' },
+    select_entry = { '<CR>' },
+    toggle_win = { '<leader>w' },
+    open_win = { '<leader>Wo' },
+    close_win = { '<leader>Wc' },
+    quit_preview = { 'q' },
+    toggle_done = { 'd' },
   },
   colors = {
-    done = "#05a623",
-    preview_filepath = "#51D8FF",
-    select_entry = "#93ccfa",
+    done = '#05a623',
+    preview_filepath = '#51D8FF',
+    select_entry = '#93ccfa',
   },
 }
 
-
-
 local function ReadContents(file)
-  local f = assert(io.open(file, "rb"))
-  local content = f:read("*all")
+  local f = assert(io.open(file, 'rb'))
+  local content = f:read('*all')
   f:close()
   return content
 end
 
 function string:split(split_pattern, result)
-  if not result then result = {} end
+  if not result then
+    result = {}
+  end
   local start = 1
   local split_start, split_end = string.find(tostring(self), split_pattern, start)
   while split_start do
@@ -92,11 +92,11 @@ LF.ParseWarnings = function(str)
       local lin, col = line:match(':(%d+):(%d+):')
       local file = line:match('^(.*):%d+:%d+:')
       local shortfile
-      if Config.normalize_path and file:match(".*%.%./%.%./") then
-        shortfile = file:match(".*%.%./%.%./(.*)")
+      if Config.normalize_path and file:match('.*%.%./%.%./') then
+        shortfile = file:match('.*%.%./%.%./(.*)')
         file = root .. '/' .. shortfile
       else
-        shortfile = file:match(root .. "/(.*)")
+        shortfile = file:match(root .. '/(.*)')
         if not shortfile then
           shortfile = file
         end
@@ -111,20 +111,22 @@ LF.ParseWarnings = function(str)
         col = tonumber(col),
         height = 1,
         width = line_len,
-        done = false
+        done = false,
       }
     else -- matching
       if line_len > warns[warn_index].width then
         warns[warn_index].width = line_len
       end
-      warns[warn_index]["height"] = warns[warn_index]["height"] + 1
-      table.insert(warns[warn_index]["warn"], line)
+      warns[warn_index]['height'] = warns[warn_index]['height'] + 1
+      table.insert(warns[warn_index]['warn'], line)
     end -- matching
   end -- for
   return warns
 end
 
-LF.GetLine = function() return vim.api.nvim_win_get_cursor(State.warn_win)[1] end
+LF.GetLine = function()
+  return vim.api.nvim_win_get_cursor(State.warn_win)[1]
+end
 
 LF.SelectEntry = function()
   local line = LF.GetLine()
@@ -132,13 +134,13 @@ LF.SelectEntry = function()
   vim.fn.win_gotoid(State.code_win)
   cmd('edit ' .. w['file'])
   api.nvim_win_set_cursor(State.code_win, {
-    w['line'], w['col'] - 1
+    w['line'],
+    w['col'] - 1,
   })
   if Config.center_on_select then
     cmd('norm zz')
   end
 end
-
 
 LF.PreviewWarn = function(warns, index, opts)
   opts = opts or {}
@@ -148,11 +150,15 @@ LF.PreviewWarn = function(warns, index, opts)
   api.nvim_buf_set_option(tmp_buf, 'bufhidden', 'wipe')
   local width = math.min(warns[index].width, ceil(vim.o.columns * wp / 100))
   local wrapping = 0
-  for _, w in pairs(warns[index]["warn"]) do if w:len() > width then wrapping = wrapping + 1 end end
+  for _, w in pairs(warns[index]['warn']) do
+    if w:len() > width then
+      wrapping = wrapping + 1
+    end
+  end
   local height = math.min(warns[index].height + wrapping, ceil(vim.o.lines * hp / 100))
-  api.nvim_buf_set_lines(tmp_buf, 0, 1, false, {warns[index]["shortfile"]})
-  api.nvim_buf_add_highlight(tmp_buf, -1, "ClangWarnsFilePath", 0, 0, -1)
-  api.nvim_buf_set_lines(tmp_buf, 1, -1, false, warns[index]["warn"])
+  api.nvim_buf_set_lines(tmp_buf, 0, 1, false, { warns[index]['shortfile'] })
+  api.nvim_buf_add_highlight(tmp_buf, -1, 'ClangWarnsFilePath', 0, 0, -1)
+  api.nvim_buf_set_lines(tmp_buf, 1, -1, false, warns[index]['warn'])
   local _ = api.nvim_open_win(tmp_buf, true, {
     relative = 'cursor',
     height = height + 1,
@@ -160,7 +166,7 @@ LF.PreviewWarn = function(warns, index, opts)
     row = 0,
     col = 0,
     style = 'minimal',
-    border = opts.border or Config.float_opts.border
+    border = opts.border or Config.float_opts.border,
   })
   wo.scrolloff = 0
   wo.sidescrolloff = 0
@@ -169,25 +175,26 @@ LF.PreviewWarn = function(warns, index, opts)
   api.nvim_buf_set_option(tmp_buf, 'modifiable', false)
 end
 
-
-LF.ClearHoverHl = function(bufnr) api.nvim_buf_clear_namespace(bufnr, State.hl_ns, 0, -1) end
+LF.ClearHoverHl = function(bufnr)
+  api.nvim_buf_clear_namespace(bufnr, State.hl_ns, 0, -1)
+end
 
 LF.SetupHls = function()
   if vim.fn.hlexists('ClangWarnsDone') == 0 then
-    vim.api.nvim_set_hl(0, "ClangWarnsDone", { fg = Config.colors.done })
+    vim.api.nvim_set_hl(0, 'ClangWarnsDone', { fg = Config.colors.done })
   end
   if vim.fn.hlexists('ClangWarnsFilePath') == 0 then
-    vim.api.nvim_set_hl(0, "ClangWarnsFilePath", {fg = Config.colors.preview_filepath})
+    vim.api.nvim_set_hl(0, 'ClangWarnsFilePath', { fg = Config.colors.preview_filepath })
   end
   if vim.fn.hlexists('ClangWarnsSelect') == 0 then
-    vim.api.nvim_set_hl(0, "ClangWarnsSelect", {fg = Config.colors.select_entry})
+    vim.api.nvim_set_hl(0, 'ClangWarnsSelect', { fg = Config.colors.select_entry })
   end
   if vim.fn.hlexists('ClangWarnsHover') == 0 then
     local cline_hl = vim.api.nvim_get_hl_by_name('CursorLine', true)
     local string_hl = vim.api.nvim_get_hl_by_name('ClangWarnsSelect', true)
     vim.api.nvim_set_hl(0, 'ClangWarnsHover', {
       bg = cline_hl.background,
-      fg = string_hl.foreground
+      fg = string_hl.foreground,
     })
   end
 end
@@ -207,7 +214,11 @@ end
 
 LF.Refresh = function()
   LF.ClearHoverHl(State.warn_buf)
-  for i, v in pairs(State.warns) do if v.done then LF.AddDoneHl(State.warn_buf, i - 1, 0) end end
+  for i, v in pairs(State.warns) do
+    if v.done then
+      LF.AddDoneHl(State.warn_buf, i - 1, 0)
+    end
+  end
   LF.AddHoverHl(State.warn_buf, LF.GetLine() - 1, 0)
 end
 
@@ -248,16 +259,14 @@ LF.ToggleWindow = function()
   end
 end
 
-
-
 LF.GetBufferNames = function()
   local buffers_all = api.nvim_list_bufs()
   local buffers = {}
   for _, buf in pairs(buffers_all) do
     local name = api.nvim_buf_get_name(buf)
-    if name ~= "" then
-      if (Config.strict_bufname) then
-        if name:match("%.log$") then
+    if name ~= '' then
+      if Config.strict_bufname then
+        if name:match('%.log$') then
           table.insert(buffers, name)
         end
       else
@@ -269,7 +278,7 @@ LF.GetBufferNames = function()
 end
 
 LF.OpenWindow = function()
-  if #(State.warns) == 0 then
+  if #State.warns == 0 then
     return
   end
   if LF.WindowIsValid() then
@@ -290,12 +299,16 @@ LF.OpenWindow = function()
   api.nvim_buf_set_name(State.warn_buf, 'Warnings')
   api.nvim_buf_set_option(State.warn_buf, 'filetype', 'Warnings')
   local warns_display = {}
-  for _, v in pairs(State.warns) do table.insert(warns_display, v['warn'][1]) end
+  for _, v in pairs(State.warns) do
+    table.insert(warns_display, v['warn'][1])
+  end
   api.nvim_buf_set_lines(State.warn_buf, 0, -1, false, warns_display)
   api.nvim_buf_set_option(State.warn_buf, 'modifiable', false)
-  autocmd("CursorMoved", {
-    callback = function() LF.Refresh() end,
-    buffer = State.warn_buf
+  autocmd('CursorMoved', {
+    callback = function()
+      LF.Refresh()
+    end,
+    buffer = State.warn_buf,
   })
   LF.SetWindowKeymaps()
   if Config.root_cd then
@@ -312,7 +325,9 @@ LF.Load = function(args)
   end
   State.hl_ns = api.nvim_create_namespace('CW_hlns')
   for _, file in ipairs(files) do
-    for _, w in pairs(LF.ParseWarnings(ReadContents(file))) do table.insert(State.warns, w) end
+    for _, w in pairs(LF.ParseWarnings(ReadContents(file))) do
+      table.insert(State.warns, w)
+    end
   end
   LF.SetGlobalKeymaps()
   if Config.open_on_load then
@@ -330,11 +345,11 @@ local Keymaps = {
       keys = {},
       fn = function()
         LF.PreviewWarn(State.warns, LF.GetLine(), Config.float_opts)
-      end
+      end,
     },
     toggle_done = {
       keys = {},
-      fn = LF.ToggleDone
+      fn = LF.ToggleDone,
     },
   },
   preview = {
@@ -347,7 +362,7 @@ local Keymaps = {
           end
           LF.SelectEntry()
         end
-      end
+      end,
     },
     quit_preview = {
       keys = {},
@@ -355,21 +370,21 @@ local Keymaps = {
         return function()
           cmd([[bwipeout! ]] .. bufnr)
         end
-      end
+      end,
     },
   },
   global = {
     toggle_win = {
       keys = {},
-      fn = LF.ToggleWindow
+      fn = LF.ToggleWindow,
     },
     open_win = {
       keys = {},
-      fn = LF.OpenWindow
+      fn = LF.OpenWindow,
     },
     close_win = {
       keys = {},
-      fn = LF.CloseWindow
+      fn = LF.CloseWindow,
     },
   },
 }
@@ -382,7 +397,7 @@ LF.SetGlobalKeymaps = function()
   end
   for _, maptype in pairs(Keymaps.global) do
     for _, keym in ipairs(maptype.keys) do
-      map({'n', 'v'}, keym, maptype.fn)
+      map({ 'n', 'v' }, keym, maptype.fn)
     end
   end
 end
@@ -390,35 +405,34 @@ end
 LF.SetPreviewKeymaps = function(bufnr)
   for _, maptype in pairs(Keymaps.preview) do
     for _, keym in ipairs(maptype.keys) do
-      map({'n', 'v'}, keym, maptype.fn(bufnr, true), { buffer = bufnr })
+      map({ 'n', 'v' }, keym, maptype.fn(bufnr, true), { buffer = bufnr })
     end
   end
-  map({'n', 'v'}, 'j', "gj", {buffer = bufnr})
-  map({'n', 'v'}, 'k', "gk", {buffer = bufnr})
+  map({ 'n', 'v' }, 'j', 'gj', { buffer = bufnr })
+  map({ 'n', 'v' }, 'k', 'gk', { buffer = bufnr })
 end
 
 LF.SetWindowKeymaps = function()
   for _, maptype in pairs(Keymaps.window) do
     for _, keym in ipairs(maptype.keys) do
-      map({'n', 'v'}, keym, maptype.fn, {buffer = State.warn_buf})
+      map({ 'n', 'v' }, keym, maptype.fn, { buffer = State.warn_buf })
     end
   end
   local sel = Keymaps.preview.select_entry
   for _, keym in pairs(sel.keys) do
-    map({'n', 'v'}, keym, sel.fn(0, false), {buffer = State.warn_buf})
+    map({ 'n', 'v' }, keym, sel.fn(0, false), { buffer = State.warn_buf })
   end
-
 end
 
 LF.CopyKeymaps = function(optskms)
   for k, _ in pairs(Keymaps) do
     for kk, _ in pairs(Keymaps[k]) do
-      if type(optskms[kk]) == "table" then
+      if type(optskms[kk]) == 'table' then
         Keymaps[k][kk].keys = optskms[kk]
       elseif Config.map_defaults and (optskms[kk] == nil) then
         Keymaps[k][kk].keys = Config.keymaps[kk]
       else
-        Keymaps[k][kk].keys = {optskms[kk]}
+        Keymaps[k][kk].keys = { optskms[kk] }
       end
     end
   end
@@ -427,8 +441,8 @@ end
 M.setup = function(opts)
   opts = opts or {}
   for key, val in pairs(Config) do
-    if type(val) == "table" then
-      if not (key == "keymaps") then
+    if type(val) == 'table' then
+      if not (key == 'keymaps') then
         for k, _ in pairs(val) do
           opts[key] = opts[key] or {}
           Config[key][k] = opts[key][k] or Config[key][k]
@@ -440,16 +454,18 @@ M.setup = function(opts)
       end
     end
   end
-  if Config.root ~= "" then
+  if Config.root ~= '' then
     State.root = Config.root
   else
-    State.root = os.getenv(Config.root_env or "") or os.getenv("PWD")
+    State.root = os.getenv(Config.root_env or '') or os.getenv('PWD')
   end
   LF.CopyKeymaps(opts.keymaps or {})
   LF.SetupHls()
-  defcommand("CWParse", function(args) LF.Load(args) end, {
+  defcommand('CWParse', function(args)
+    LF.Load(args)
+  end, {
     force = true,
-    nargs = "*"
+    nargs = '*',
   })
 end
 
