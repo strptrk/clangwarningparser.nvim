@@ -5,9 +5,9 @@ The goal of clangwarningparser.nvim is to make it easier to handle clang-tidy ou
 ## Table of contents
 
 1. [Install](#install)
-1. [Requirements](#requirements)
-1. [Configuration](#configuration)
-1. [Usage](#usage)
+2. [Requirements](#requirements)
+3. [Configuration](#configuration)
+4. [Usage](#usage)
 
 ## Install
 
