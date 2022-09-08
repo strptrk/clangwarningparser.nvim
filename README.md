@@ -114,6 +114,8 @@ Calling the `setup` function defines the command `CWParse`
 - `CWParse file1 file2 ...` to parse the argument files as a clang-tidy output files
 - `CWParse buffers` to parse the currently opened buffers as clang-tidy output files
 
+The configured keymaps will only be set after calling `CWParse`.
+
 Example:
 ```lua
 require('clangwarningparser').setup({
