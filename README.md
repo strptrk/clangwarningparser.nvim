@@ -96,7 +96,7 @@ Options:
 - `normalize_path`: replace '../../' with '\<project root\>/' in file paths (`true/false`) 
 - `keymaps`: each keymap is either a string or a table of strings
     - `preview`: opens the description of the error in a floating window
-    - `select_entry`: jumpts to the location of the warning in your original window
+    - `select_entry`: jumps to the location of the warning in your original window
     - `toggle_win`: toggles the sidebar
     - `open_win`: opens the sidebar
     - `close_win`: closes the sidebar
