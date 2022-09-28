@@ -42,7 +42,7 @@ local Config = {
     open_win = { '<leader>Wo' },
     close_win = { '<leader>Wc' },
     quit_preview = { 'q' },
-    toggle_done = { 'd' },
+    toggle_done = { 'd', '<tab>' },
   },
   colors = {
     done = '#05a623',
@@ -224,6 +224,7 @@ end
 
 LF.ToggleDone = function()
   LF.SetDone()
+  vim.cmd([[norm j]])
   LF.Refresh()
 end
 

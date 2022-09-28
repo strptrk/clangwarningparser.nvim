@@ -63,7 +63,7 @@ require('clangwarningparser').setup({
     open_win = '<leader>Wo',
     close_win = '<leader>Wc',
     quit_preview = 'q',
-    toggle_done = 'd'
+    toggle_done = {'d', '<tab>'}
   },
   colors = {
     done = "#05a623",
@@ -133,7 +133,7 @@ require('clangwarningparser').setup({
     select_entry = '<CR>',
     toggle_win = '<leader>w',
     quit_preview = 'q',
-    toggle_done = 'd'
+    toggle_done = {'d', '<tab>'}
   },
 })
 vim.keymap.set('n', '<leader>w', '<cmd>CWParse buffers<cr>')
