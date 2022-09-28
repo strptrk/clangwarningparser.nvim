@@ -125,7 +125,7 @@ LF.ParseWarnings = function(str)
 end
 
 LF.GetLine = function()
-  return vim.api.nvim_win_get_cursor(State.warn_win)[1]
+  return vim.api.nvim_win_get_cursor(0)[1]
 end
 
 LF.SelectEntry = function()
