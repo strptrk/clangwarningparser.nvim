@@ -347,10 +347,12 @@ local Keymaps = {
       fn = function()
         LF.PreviewWarn(State.warns, LF.GetLine(), Config.float_opts)
       end,
+      desc = "Open Preview"
     },
     toggle_done = {
       keys = {},
       fn = LF.ToggleDone,
+      desc = "Toggle Done"
     },
   },
   preview = {
@@ -364,6 +366,7 @@ local Keymaps = {
           LF.SelectEntry()
         end
       end,
+      desc = "Select Entry"
     },
     quit_preview = {
       keys = {},
@@ -372,20 +375,24 @@ local Keymaps = {
           cmd([[bwipeout! ]] .. bufnr)
         end
       end,
+      desc = "Quit Preview"
     },
   },
   global = {
     toggle_win = {
       keys = {},
       fn = LF.ToggleWindow,
+      desc = "Toggle Sidebar"
     },
     open_win = {
       keys = {},
       fn = LF.OpenWindow,
+      desc = "Open Sidebar"
     },
     close_win = {
       keys = {},
       fn = LF.CloseWindow,
+      desc = "Close Sidebar"
     },
   },
 }
@@ -398,7 +405,7 @@ LF.SetGlobalKeymaps = function()
   end
   for _, maptype in pairs(Keymaps.global) do
     for _, keym in ipairs(maptype.keys) do
-      map({ 'n', 'v' }, keym, maptype.fn)
+      map({ 'n', 'v' }, keym, maptype.fn, { desc = maptype.desc })
     end
   end
 end
@@ -406,7 +413,7 @@ end
 LF.SetPreviewKeymaps = function(bufnr)
   for _, maptype in pairs(Keymaps.preview) do
     for _, keym in ipairs(maptype.keys) do
-      map({ 'n', 'v' }, keym, maptype.fn(bufnr, true), { buffer = bufnr })
+      map({ 'n', 'v' }, keym, maptype.fn(bufnr, true), { buffer = bufnr, desc = maptype.desc })
     end
   end
   map({ 'n', 'v' }, 'j', 'gj', { buffer = bufnr })
