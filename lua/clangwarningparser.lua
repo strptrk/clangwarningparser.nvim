@@ -134,7 +134,7 @@ LF.JumpToCodeWin = function()
   if curwin == vim.fn.winnr() then
     cmd('wincmd v')
     cmd('wincmd h')
-    cmd('vertical resize ' .. State.width)
+    api.nvim_win_set_width(State.warn_win, State.width)
   end
 end
 
