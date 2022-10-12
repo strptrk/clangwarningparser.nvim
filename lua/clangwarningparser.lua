@@ -16,6 +16,7 @@ local State = {
   hl_ns = -1,
   keys_mapped = false,
   root = '',
+  width = -1;
 }
 
 local Config = {
@@ -133,6 +134,7 @@ LF.JumpToCodeWin = function()
   if curwin == vim.fn.winnr() then
     cmd('wincmd v')
     cmd('wincmd h')
+    cmd('vertical resize ' .. State.width)
   end
 end
 
@@ -156,10 +158,10 @@ LF.PreviewWarn = function(warns, index, opts)
   local wp = opts.width_percentage or Config.float_opts.width_percentage
   local tmp_buf = api.nvim_create_buf(false, true)
   api.nvim_buf_set_option(tmp_buf, 'bufhidden', 'wipe')
-  local width = math.min(warns[index].width, ceil(vim.o.columns * wp / 100))
+  State.width = math.min(warns[index].width, ceil(vim.o.columns * wp / 100))
   local wrapping = 0
   for _, w in pairs(warns[index]['warn']) do
-    if w:len() > width then
+    if w:len() > State.width then
       wrapping = wrapping + 1
     end
   end
@@ -170,7 +172,7 @@ LF.PreviewWarn = function(warns, index, opts)
   local _ = api.nvim_open_win(tmp_buf, true, {
     relative = 'cursor',
     height = height + 1,
-    width = width,
+    width = State.width,
     row = 0,
     col = 0,
     style = 'minimal',
