@@ -133,8 +133,8 @@ LF.JumpToCodeWin = function()
   cmd('wincmd h')
   if curwin == vim.fn.winnr() then
     cmd('wincmd v')
+    api.nvim_win_set_width(0, State.width)
     cmd('wincmd h')
-    api.nvim_win_set_width(State.warn_win, State.width)
   end
 end
 
