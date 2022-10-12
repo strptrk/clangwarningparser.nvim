@@ -10,7 +10,6 @@ local M = {}
 local LF = {}
 
 local State = {
-  code_win = -1,
   warn_win = -1,
   warn_buf = -1,
   warns = {},
@@ -128,12 +127,21 @@ LF.GetLine = function()
   return vim.api.nvim_win_get_cursor(0)[1]
 end
 
+LF.JumpToCodeWin = function()
+  local curwin = vim.fn.winnr()
+  cmd('wincmd h')
+  if curwin == vim.fn.winnr() then
+    cmd('wincmd v')
+    cmd('wincmd h')
+  end
+end
+
 LF.SelectEntry = function()
   local line = LF.GetLine()
   local w = State.warns[line]
-  vim.fn.win_gotoid(State.code_win)
+  LF.JumpToCodeWin()
   cmd('edit ' .. w['file'])
-  api.nvim_win_set_cursor(State.code_win, {
+  api.nvim_win_set_cursor(api.nvim_get_current_win(), {
     w['line'],
     w['col'] - 1,
   })
@@ -285,7 +293,6 @@ LF.OpenWindow = function()
   if LF.WindowIsValid() then
     return
   end
-  State.code_win = api.nvim_get_current_win()
   State.warn_buf = api.nvim_create_buf(false, true)
   api.nvim_buf_set_option(State.warn_buf, 'bufhidden', 'wipe')
   cmd('botright vs')
