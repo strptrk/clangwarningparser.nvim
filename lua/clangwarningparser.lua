@@ -1,5 +1,6 @@
 local api = vim.api
 local wo = vim.wo
+local fn = vim.fn
 local cmd = vim.cmd
 local map = vim.keymap.set
 local autocmd = vim.api.nvim_create_autocmd
@@ -16,6 +17,7 @@ local State = {
   hl_ns = -1,
   keys_mapped = false,
   root = '',
+  extmark_ns = 0;
 }
 
 local Config = {
@@ -73,6 +75,7 @@ function string:split(split_pattern, result)
 end
 
 LF.ParseWarnings = function(str)
+  State.extmark_ns = api.nvim_create_namespace("ClangWarnNS")
   local root = State.root
   local lines = str:split('\n')
   for i, v in pairs(lines) do
@@ -91,23 +94,24 @@ LF.ParseWarnings = function(str)
       local lin, col = line:match(':(%d+):(%d+):')
       local file = line:match('^(.*):%d+:%d+:')
       local shortfile
-      if Config.normalize_path and file:match('.*%.%./%.%./') then
+      if file:match('.*%.%./%.%./') then
         shortfile = file:match('.*%.%./%.%./(.*)')
         file = root .. '/' .. shortfile
       else
-        shortfile = file:match(root .. '/(.*)')
-        if not shortfile then
-          shortfile = file
-        end
+        shortfile = file
+        file = root .. '/' .. file
       end
       local warn = line:match('^.*warning: (.*)')
       warn_index = warn_index + 1
+      local bufnr = fn.bufadd(file)
+      fn.bufload(file)
+      local extmark_id = api.nvim_buf_set_extmark(bufnr, State.extmark_ns, tonumber(lin) - 1, tonumber(col) - 1, {})
       warns[warn_index] = {
         warn = { warn },
         file = file,
         shortfile = shortfile,
-        line = tonumber(lin),
-        col = tonumber(col),
+        bufnr = bufnr,
+        extmark = extmark_id,
         height = 1,
         width = line_len,
         done = false,
@@ -138,14 +142,12 @@ LF.JumpToCodeWin = function()
 end
 
 LF.SelectEntry = function()
-  local line = LF.GetLine()
-  local w = State.warns[line]
+  local cur_line = LF.GetLine()
+  local w = State.warns[cur_line]
   LF.JumpToCodeWin()
-  cmd('edit ' .. w['file'])
-  api.nvim_win_set_cursor(api.nvim_get_current_win(), {
-    w['line'],
-    w['col'] - 1,
-  })
+  api.nvim_win_set_buf(0, w.bufnr)
+  local pos = api.nvim_buf_get_extmark_by_id(w.bufnr, State.extmark_ns, w.extmark, {})
+  api.nvim_win_set_cursor(api.nvim_get_current_win(), { pos[1] + 1, pos[2] })
   if Config.center_on_select then
     cmd('norm zz')
   end
@@ -233,7 +235,7 @@ end
 
 LF.ToggleDone = function()
   LF.SetDone()
-  vim.cmd([[norm j]])
+  api.nvim_feedkeys('j', 'normal', false)
   LF.Refresh()
 end
 
@@ -288,6 +290,9 @@ LF.GetBufferNames = function()
 end
 
 LF.OpenWindow = function()
+  if State.root then
+    cmd([[cd ]] .. State.root)
+  end
   if #State.warns == 0 then
     return
   end
