@@ -55,7 +55,6 @@ require('clangwarningparser').setup({
   root_env = "",
   root_cd = false,
   map_defaults = true,
-  normalize_path = true,
   keymaps = {
     preview = {'o', 'p'},
     select_entry = '<CR>',
@@ -93,7 +92,6 @@ Options:
 - `root_cd`: `:cd` into the `root` or `root_env` directory when jumping to files (`true/false`)
     - note: `root` takes precedence over `root_env`, if neither is given, the root will be set to $PWD
 - `map_defaults`: set default keymaps to functions you do not map (`true/false`) 
-- `normalize_path`: replace '../../' with '\<project root\>/' in file paths (`true/false`) 
 - `keymaps`: each keymap is either a string or a table of strings
     - `preview`: opens the description of the error in a floating window
     - `select_entry`: jumps to the location of the warning in your original window
