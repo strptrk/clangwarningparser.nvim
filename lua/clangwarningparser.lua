@@ -338,6 +338,7 @@ LF.Load = function(args)
   local files = args.fargs
   if tostring(files[1]) == 'clear' then
     LF.Clear()
+    return
   elseif tostring(files[1]) == 'buffers' then
     files = LF.GetBufferNames()
   elseif files[1] == nil then
