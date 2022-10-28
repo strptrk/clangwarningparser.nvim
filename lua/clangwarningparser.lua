@@ -108,7 +108,7 @@ LF.ParseWarnings = function(str)
       local warn = line:match('^.*warning: (.*)')
       warn_index = warn_index + 1
       local bufnr = fn.bufadd(file)
-      -- fn.bufload(file)
+      fn.bufload(file)
       local extmark_id = api.nvim_buf_set_extmark(bufnr, State.extmark_ns, tonumber(lin) - 1, tonumber(col) - 1, {})
       warns[warn_index] = {
         warn = { warn },
