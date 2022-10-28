@@ -74,6 +74,10 @@ function string:split(split_pattern, result)
   return result
 end
 
+LF.Clear = function()
+  State.warns = {}
+end
+
 LF.ParseWarnings = function(str)
   State.extmark_ns = api.nvim_create_namespace("ClangWarnNS")
   local root = State.root
@@ -332,7 +336,9 @@ end
 
 LF.Load = function(args)
   local files = args.fargs
-  if tostring(files[1]) == 'buffers' then
+  if tostring(files[1]) == 'clear' then
+    LF.Clear()
+  elseif tostring(files[1]) == 'buffers' then
     files = LF.GetBufferNames()
   elseif files[1] == nil then
     files = { api.nvim_buf_get_name(0) }
