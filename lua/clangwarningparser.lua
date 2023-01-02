@@ -81,14 +81,16 @@ end
 LF.ParseWarnings = function(str)
   State.extmark_ns = api.nvim_create_namespace("ClangWarnNS")
   local root = State.root
-  local lines = str:split('\n')
-  for i, v in pairs(lines) do
-    if v:match('^%d+ warning[s]? generated') then
-      lines[i] = nil
-    else
-      break
-    end
+  local lines_raw = str:split('\n')
+  lines_raw[1] = nil
+  local lines = {}
+  for _, v in pairs(lines_raw) do
+    if not (v:match('^%d+ warning[s]? generated.') or
+        v:match("^$") or v:match('^---.*$')) then
+        table.insert(lines, v)
+  end
   end -- for
+  lines_raw = nil
   local warns = {}
   local warn_index = 0
   for _, line in pairs(lines) do
